@@ -1,6 +1,5 @@
 # Product microservice API
 
-This service fetches data from GitHub's public APIs to retrieve repository commits, saves the data in a persistent store, and continuously monitors the repository for changes at a set interval.
 
 ## Requirements- Golang 1.20+
 - PostgreSQL
