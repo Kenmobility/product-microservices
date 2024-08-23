@@ -1,0 +1,141 @@
+syntax = "proto3";
+
+package pb;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/kenmobility/product-microservice/pb";
+
+service SubscriptionService {
+    rpc CreateSubscriptionPlan(CreateSubscriptionPlanRequest) returns (CreateSubscriptionPlanResponse);
+    rpc GetSubscriptionPlan(GetSubscriptionPlanRequest) returns (GetSubscriptionPlanResponse);
+    rpc UpdateSubscriptionPlan(UpdateSubscriptionPlanRequest) returns (UpdateSubscriptionPlanResponse);
+    rpc DeleteSubscriptionPlan(DeleteSubscriptionPlanRequest) returns (DeleteSubscriptionPlanResponse);
+    rpc ListSubscriptionPlans(ListSubscriptionPlansRequest) returns (ListSubscriptionPlansResponse);
+}
+
+// ProductService messages
+message CreateProductRequest {
+    Product product = 1;
+}
+
+message CreateProductResponse {
+    Product product = 1;
+}
+
+// Product messages
+message Product {
+    int32 id = 1;
+    string public_id = 2;
+    string name = 3;
+    string description = 4;
+    float price = 5;
+    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp updated_at = 7;
+    oneof product_type {
+        DigitalProduct digital_product = 8;
+        PhysicalProduct physical_product = 9;
+        SubscriptionProduct subscription_product = 10;
+    }
+}
+
+message DigitalProduct {
+    int32 file_size = 1;
+    string download_link = 2;
+}
+
+message PhysicalProduct {
+    float weight = 1;
+    string dimensions = 2;
+}
+
+message SubscriptionProduct {
+    string subscription_period = 1;
+    float renewal_price = 2;
+}
+
+// Subscription Plan messages
+message SubscriptionPlan {
+    int32 id = 1;
+    int32 product_id = 2;
+    string plan_name = 3;
+    int32 duration = 4;
+    float price = 5;
+}
+
+message GetProductRequest {
+    string id = 1;
+}
+
+message GetProductResponse {
+    Product product = 1;
+}
+
+message UpdateProductRequest {
+    Product product = 1;
+}
+
+message UpdateProductResponse {
+    Product product = 1;
+}
+
+message DeleteProductRequest {
+    string id = 1;
+}
+
+message DeleteProductResponse {}
+
+message ListProductsRequest {
+    string type_filter = 1;
+}
+
+message ListProductsResponse {
+    repeated Product products = 1;
+}
+
+// SubscriptionService messages
+message CreateSubscriptionPlanRequest {
+    SubscriptionPlan plan = 1;
+}
+
+message CreateSubscriptionPlanResponse {
+    SubscriptionPlan plan = 1;
+}
+
+message GetSubscriptionPlanRequest {
+    string id = 1;
+}
+
+message GetSubscriptionPlanResponse {
+    SubscriptionPlan plan = 1;
+}
+
+message UpdateSubscriptionPlanRequest {
+    SubscriptionPlan plan = 1;
+}
+
+message UpdateSubscriptionPlanResponse {
+    SubscriptionPlan plan = 1;
+}
+
+message DeleteSubscriptionPlanRequest {
+    string id = 1;
+}
+
+message DeleteSubscriptionPlanResponse {}
+
+message ListSubscriptionPlansRequest {
+    string product_id = 1;
+}
+
+message ListSubscriptionPlansResponse {
+    repeated SubscriptionPlan plans = 1;
+}
+
+service ProductService {
+    rpc CreateProduct(CreateProductRequest) returns (CreateProductResponse);
+    rpc GetProduct(GetProductRequest) returns (GetProductResponse);
+    rpc UpdateProduct(UpdateProductRequest) returns (UpdateProductResponse);
+    rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse);
+    rpc ListProducts(ListProductsRequest) returns (ListProductsResponse);
+}
